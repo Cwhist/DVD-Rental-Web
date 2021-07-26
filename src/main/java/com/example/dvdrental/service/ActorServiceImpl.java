@@ -27,6 +27,11 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
+    public List<Actor> getActorByName(String name) {
+        return actorRepository.findActorByName(name);
+    }
+
+    @Override
     public Actor insertNewActor(String firstName, String lastName) {
 
         Actor actor = new Actor();

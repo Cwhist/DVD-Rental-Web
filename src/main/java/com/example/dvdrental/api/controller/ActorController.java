@@ -3,8 +3,10 @@ package com.example.dvdrental.api.controller;
 import com.example.dvdrental.api.assembler.ActorModelAssembler;
 import com.example.dvdrental.api.representationmodel.ActorModel;
 import com.example.dvdrental.entity.Actor;
+import com.example.dvdrental.exception.ActorNameNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.ActorService;
+import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
@@ -31,7 +33,7 @@ public class ActorController {
     @Autowired
     ActorModelAssembler actorModelAssembler;
 
-    @GetMapping
+    @GetMapping(path = "/all")
     @ApiOperation(value = "모든 배우 정보 조회")
     public ResponseEntity<CollectionModel<ActorModel>> retrieveAllActors() {
 
@@ -46,7 +48,20 @@ public class ActorController {
         return actorService.getActorById(id)
                 .map(actorModelAssembler::toModel)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(()-> new IdNotFoundException(id));
+    }
+
+    @GetMapping
+    @ApiOperation(value = "이름으로 배우 정보 검색")
+    public ResponseEntity<CollectionModel<ActorModel>> searchActorByName(@NotNull String name) {
+
+        final List<Actor> actors = actorService.getActorByName(name);
+
+        if(CollectionChecker.isEmpty(actors))
+            throw new ActorNameNotFoundException(name);
+
+        return ResponseEntity.ok(actorModelAssembler.toCollectionModel(actors));
+
     }
 
     @PostMapping
@@ -82,6 +97,7 @@ public class ActorController {
 
         return ResponseEntity.noContent().build();
     }
+
 
     @Getter
     @Setter

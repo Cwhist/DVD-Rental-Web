@@ -11,9 +11,12 @@ public interface ActorService {
 
     Optional<Actor> getActorById(int id);
 
+    List<Actor> getActorByName(String name);
+
     Actor insertNewActor(String firstName, String lastName);
 
     void updateActor(Actor actor, String firstName, String lastName);
 
     void deleteActor(Actor actor);
+
 }
