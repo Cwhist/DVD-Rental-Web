@@ -7,6 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ActorNameNotFoundException extends RuntimeException {
 
-    private String name;
+    private final String name;
 
 }
