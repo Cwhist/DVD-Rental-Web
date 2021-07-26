@@ -53,7 +53,7 @@ public class ActorController {
 
     @GetMapping
     @ApiOperation(value = "이름으로 배우 정보 검색")
-    public ResponseEntity<CollectionModel<ActorModel>> searchActorByName(@NotNull String name) {
+    public ResponseEntity<CollectionModel<ActorModel>> findActorByName(@NotNull String name) {
 
         final List<Actor> actors = actorService.getActorByName(name);
 
