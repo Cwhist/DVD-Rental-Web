@@ -18,6 +18,21 @@ public class GlobalExceptionController {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorCode("id.notfound.exception");
         errorResponse.setErrorMsg("id " + ex.getId() + " not found");
+        errorResponse.setRequestURL(requestURL);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(ActorNameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(HttpServletRequest req, ActorNameNotFoundException ex) {
+
+        String requestURL = req.getRequestURL().toString();
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorCode("actor.notfound.exception");
+        errorResponse.setErrorMsg("actor named " + ex.getName() + " not found");
+        errorResponse.setRequestURL(requestURL);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 
