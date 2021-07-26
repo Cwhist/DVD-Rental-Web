@@ -3,8 +3,10 @@ package com.example.dvdrental.api.controller;
 import com.example.dvdrental.api.assembler.FilmModelAssembler;
 import com.example.dvdrental.api.representationmodel.FilmModel;
 import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.exception.FilmTitleNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.FilmService;
+import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
@@ -31,7 +33,7 @@ public class FilmController {
     @Autowired
     FilmModelAssembler filmModelAssembler;
 
-    @GetMapping
+    @GetMapping(path = "/all")
     @ApiOperation(value = "모든 영화 조회")
     public ResponseEntity<CollectionModel<FilmModel>> retrieveAllFilms() {
 
@@ -48,6 +50,20 @@ public class FilmController {
                 .map(filmModelAssembler::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    @ApiOperation(value = "제목으로 영화 검색")
+    public ResponseEntity<CollectionModel<FilmModel>> searchFilmByTitle(@NotNull String title) {
+
+        final List<Film> films = filmService.getFilmByTitle(title);
+
+        if(CollectionChecker.isEmpty(films))
+            throw new FilmTitleNotFoundException(title);
+
+        return ResponseEntity.ok(filmModelAssembler.toCollectionModel(films));
+
+
     }
 
     @PostMapping

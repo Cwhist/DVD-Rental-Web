@@ -11,9 +11,12 @@ public interface FilmService {
 
     Optional<Film> getFilmById(int id);
 
+    List<Film> getFilmByTitle(String title);
+
     Film insertNewFilm(Film film);
 
     void updateFilm(Film film);
 
     void deleteFilm(Film film);
+
 }
