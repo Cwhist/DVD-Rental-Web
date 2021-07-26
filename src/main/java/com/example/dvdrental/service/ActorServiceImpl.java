@@ -28,7 +28,14 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public List<Actor> getActorByName(String name) {
-        return actorRepository.searchByName(name);
+
+        if(name.contains(" ")) {
+            String[] splitNames = name.split(" ");
+
+            return actorRepository.searchBySplitNameLike(splitNames[0], splitNames[1]);
+
+        } else
+            return actorRepository.searchByNameLike(name);
     }
 
     @Override
