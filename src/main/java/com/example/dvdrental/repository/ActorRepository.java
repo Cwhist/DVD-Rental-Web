@@ -10,6 +10,6 @@ import java.util.List;
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
     @Query("SELECT actor FROM Actor actor WHERE actor.firstName = :name OR actor.lastName = :name")
-    List<Actor> findByName(@Param("name") String name);
+    List<Actor> searchByName(@Param("name") String name);
 
 }
