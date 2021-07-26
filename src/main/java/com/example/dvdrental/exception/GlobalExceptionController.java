@@ -38,5 +38,19 @@ public class GlobalExceptionController {
 
     }
 
+    @ExceptionHandler(FilmTitleNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(HttpServletRequest req, FilmTitleNotFoundException ex) {
+
+        String requestURL = req.getRequestURL().toString();
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorCode("film.notfound.exception");
+        errorResponse.setErrorMsg("film titled " + ex.getTitle() + " not found");
+        errorResponse.setRequestURL(requestURL);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    }
+
 
 }
