@@ -2,7 +2,6 @@ package com.example.dvdrental.repository;
 
 import com.example.dvdrental.entity.Inventory;
 import com.example.dvdrental.exception.IdNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,6 +91,7 @@ class InventoryRepositoryTest {
         List<Inventory> listAfterDeletion;
         int sizeAfterDeletion;
         Inventory targetInventoryAfterDeletion;
+        Inventory dummyInventory = new Inventory(-404, -404, null);
 
         // Before Deletion
         listBeforeDeletion = inventoryRepository.findAll();
@@ -108,11 +107,11 @@ class InventoryRepositoryTest {
         listAfterDeletion = inventoryRepository.findAll();
         sizeAfterDeletion = listAfterDeletion.size();
         targetInventoryAfterDeletion = inventoryRepository.findById(targetInventoryId)
-                .orElse(new Inventory(-404, -404));
+                .orElse(dummyInventory);
 
         // Assert
         assertEquals(expectedSize, sizeAfterDeletion);
-        assertEquals(-404, targetInventoryAfterDeletion.getInventoryId());
+        assertEquals(dummyInventory.getInventoryId(), targetInventoryAfterDeletion.getInventoryId());
 
     }
 
