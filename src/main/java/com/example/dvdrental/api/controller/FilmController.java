@@ -76,7 +76,6 @@ public class FilmController {
                 .length(request.getLength())
                 .rentalDuration(request.getRentalDuration())
                 .replacementCost(request.getReplacementCost())
-                .specialFeatures(request.getSpecialFeatures())
                 .build();
 
         film = filmService.insertNewFilm(film);
@@ -100,7 +99,6 @@ public class FilmController {
         film.setLength(request.getLength());
         film.setRentalDuration(request.getRentalDuration());
         film.setReplacementCost(request.getReplacementCost());
-        film.setSpecialFeatures(request.getSpecialFeatures());
 
         filmService.updateFilm(film);
 

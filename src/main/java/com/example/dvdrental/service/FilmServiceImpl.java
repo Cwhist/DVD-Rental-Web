@@ -26,11 +26,7 @@ public class FilmServiceImpl implements FilmService {
     public List<Film> getFilmByTitle(String title) { return filmRepository.searchByTitleLike(title); }
 
     @Override
-    public Film insertNewFilm(Film film) {
-        film.setLanguageId(1);
-        film.setReleaseYear(2021);
-        return filmRepository.save(film);
-    }
+    public Film insertNewFilm(Film film) { return filmRepository.save(film); }
 
     @Override
     public void updateFilm(Film film) { filmRepository.save(film); }

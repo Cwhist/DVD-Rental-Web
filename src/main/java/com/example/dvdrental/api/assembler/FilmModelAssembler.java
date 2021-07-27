@@ -36,13 +36,9 @@ public class FilmModelAssembler extends RepresentationModelAssemblerSupport<Film
         filmModel.setFilmId(entity.getFilmId());
         filmModel.setTitle(entity.getTitle());
         filmModel.setDescription(entity.getDescription());
-        filmModel.setReleaseYear(entity.getReleaseYear());
-        filmModel.setLanguageId(entity.getLanguageId());
         filmModel.setRentalDuration(entity.getRentalDuration());
-        filmModel.setRentalRate(entity.getRentalRate());
         filmModel.setLength(entity.getLength());
         filmModel.setReplacementCost(entity.getReplacementCost());
-        filmModel.setSpecialFeatures(entity.getSpecialFeatures());
 
         if( !CollectionUtils.isEmpty(entity.getActors()) ) {
             filmModel.setActors(toActorModel(entity.getActors()));

@@ -25,25 +25,13 @@ public class Film {
 
     private String description;
 
-    @Column(name = "release_year")
-    private int releaseYear;
-
-    @Column(name = "language_id")
-    private int languageId;
-
     @Column(name = "rental_duration")
     private int rentalDuration;
-
-    @Column(name = "rental_rate")
-    private float rentalRate;
 
     private int length;
 
     @Column(name = "replacement_cost")
     private float replacementCost;
-
-    @Column(name = "special_features")
-    private String specialFeatures;
 
     //Many To Many Join
     // Film - Actor

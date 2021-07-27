@@ -20,14 +20,9 @@ public class FilmModel extends RepresentationModel<FilmModel> {
     private int filmId;
     private String title;
     private String description;
-    private int releaseYear;
-    private int languageId;
     private int rentalDuration;
-    private float rentalRate;
     private int length;
     private float replacementCost;
-    private String rating;
-    private String specialFeatures;
     private List<ActorModel> actors;
 
 }
