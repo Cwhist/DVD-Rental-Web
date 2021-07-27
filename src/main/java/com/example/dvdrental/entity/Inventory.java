@@ -4,6 +4,7 @@ package com.example.dvdrental.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,10 @@ public class Inventory {
 
     @Column(name = "film_id")
     private int filmId;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "inventory_id")
+    private List<Rental> rentalList;
 
     // Set store_id in DB Nullable
 
