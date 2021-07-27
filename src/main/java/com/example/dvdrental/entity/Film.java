@@ -41,5 +41,8 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "film_id"))
     private List<Actor> actors;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "film_id")
+    private List<Inventory> inventoryList;
 
 }
