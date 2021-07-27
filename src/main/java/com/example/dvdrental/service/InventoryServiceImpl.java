@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
 import java.util.List;
 
 @Service
@@ -22,5 +23,20 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory target = inventoryRepository.findById(id)
                             .orElseThrow(()-> new IdNotFoundException(id));
         return target.getRentalList();
+    }
+
+    @Override
+    public boolean checkRentableById(int id) {
+        Inventory target = inventoryRepository.findById(id)
+                            .orElseThrow(()-> new IdNotFoundException(id));
+        List<Rental> rentalList = target.getRentalList();
+
+        // Return date null means it hasn't returned
+        for(Rental rental : rentalList) {
+            if(rental.getReturnDate() == null) return false;
+        }
+
+        return true;
+
     }
 }

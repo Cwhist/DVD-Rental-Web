@@ -26,4 +26,15 @@ class InventoryServiceImplTest {
         assertEquals(expectedCount, result.size());
 
     }
+
+    @ParameterizedTest
+    @CsvSource({"1, true", "6, false", "8, true", "9, false"})
+    void checkRentableById_targetInventory_verifyingRentable(int targetInventoryId, boolean expectedResult) {
+
+        boolean actualResult = inventoryService.checkRentableById(targetInventoryId);
+
+        assertEquals(expectedResult, actualResult);
+
+    }
+
 }
