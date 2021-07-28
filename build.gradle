@@ -29,10 +29,15 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// Swagger
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+	// thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
 
