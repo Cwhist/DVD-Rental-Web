@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+</head>
+<body>
+
+  <form th:action="@{/search}" th:object="${search_data}" method="post">
+      <h3 th:text="검색대상"></h3>
+      <p><input type="text" th:field="*{search_target}"></p>
+      <h3 th:text="키워드"></h3>
+      <p><input type="text" th:field="*{search_keyword}"></p>
+
+      <p><input type="submit" value="검색"></p>
+  </form>
+
+</body>
+</html>
