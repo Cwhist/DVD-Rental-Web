@@ -1,6 +1,8 @@
 package com.example.dvdrental.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,6 +44,7 @@ public class Film {
     private List<Actor> actors;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "film_id")
     private List<Inventory> inventoryList;
 
