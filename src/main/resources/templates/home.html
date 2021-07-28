@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DVD Rental Home</title>
+</head>
+<body>
+    <h1 th:text="${intro}">Intro</h1>
+    <a th:href="@{/search}">검색</a><br><br>
+    <a th:href="@{/api/films/all}">영화 목록</a><br><br>
+    <a th:href="@{/api/actors/all}">배우 목록</a>
+
+</body>
+</html>
