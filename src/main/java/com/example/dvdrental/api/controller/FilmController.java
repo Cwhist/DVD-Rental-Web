@@ -2,9 +2,12 @@ package com.example.dvdrental.api.controller;
 
 import com.example.dvdrental.api.assembler.FilmModelAssembler;
 import com.example.dvdrental.api.representationmodel.FilmModel;
+import com.example.dvdrental.entity.Actor;
 import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.exception.FilmNotFoundException;
 import com.example.dvdrental.exception.FilmTitleNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
+import com.example.dvdrental.service.ActorService;
 import com.example.dvdrental.service.FilmService;
 import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
@@ -29,6 +32,9 @@ public class FilmController {
 
     @Autowired
     FilmService filmService;
+
+    @Autowired
+    ActorService actorService;
 
     @Autowired
     FilmModelAssembler filmModelAssembler;
@@ -63,6 +69,22 @@ public class FilmController {
 
         return ResponseEntity.ok(filmModelAssembler.toCollectionModel(films));
 
+
+    }
+
+    @GetMapping(path = "/actorid/{id}")
+    @ApiOperation(value = "배우 id로 영화 검색")
+    public ResponseEntity<CollectionModel<FilmModel>> searchFilmByActorId(@PathVariable int id) {
+
+        final Actor actor = actorService.getActorById(id)
+                .orElseThrow(()-> new IdNotFoundException(id));
+
+        final List<Film> films = actor.getFilms();
+
+        if(CollectionChecker.isEmpty(films))
+            throw new FilmNotFoundException(id);
+
+        return ResponseEntity.ok(filmModelAssembler.toCollectionModel(films));
 
     }
 

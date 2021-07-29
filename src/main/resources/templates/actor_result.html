@@ -17,21 +17,21 @@
             url: 'http://localhost:8080/api/actors/' + [[${search_keyword}]],
             type: 'GET',
             success: function(data, textStatus) {
-                console.log('data')
-                console.log(data)
+                console.log('data');
+                console.log(data);
 
-                const jsonInfo = JSON.stringify(data)
+                const jsonInfo = JSON.stringify(data);
 
-                const parsedInfo = JSON.parse(jsonInfo)
+                const parsedInfo = JSON.parse(jsonInfo);
 
-                const actorInfo = parsedInfo._embedded.actors
+                const actorInfo = parsedInfo._embedded.actors;
 
-                $('#replyarea').append("search_keyword: " + [[${search_keyword}]])
+                $('#replyarea').append("search_keyword: " + [[${search_keyword}]]);
 
                 for(var i=0; i < actorInfo.length; i++) {
                     $('#appendarea').append("<tr><th scope='col'>" + i + "</th>"
                                            + "<td>" + actorInfo[i].firstName + " " + actorInfo[i].lastName + "</td>"
-                                           + "<td> <a th:href='@{/search/actor-film/" + actorInfo[i].actorId + "}'>더보기</a></td></tr>")
+                                           + "<td> <a href='/search/actor-film/" + actorInfo[i].actorId+ "'>더보기</a></td></tr>");
 
                 }
 
