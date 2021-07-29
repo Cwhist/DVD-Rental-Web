@@ -10,46 +10,42 @@
 </head>
 <body>
 
-<h2 th:text="${search_keyword}"></h2>
-<script th:inline="javascript">
+  <script th:inline="javascript">
 
-        $.ajax({
-            url: 'http://localhost:8080/api/films/actorid/' + [[${actor_id}]],
-            type: 'GET',
-            success: function(data, textStatus) {
-                console.log('data');
-                console.log(data);
+      $.ajax({
+          url: 'http://localhost:8080/api/films/actorid/' + [[${actor_id}]],
+          type: 'GET',
+          success: function(data, textStatus) {
+              console.log('data');
+              console.log(data);
 
-                const jsonInfo = JSON.stringify(data);
+              const jsonInfo = JSON.stringify(data);
 
-                const parsedInfo = JSON.parse(jsonInfo);
+              const parsedInfo = JSON.parse(jsonInfo);
 
-                const filmInfo = parsedInfo._embedded.films;
+              const filmInfo = parsedInfo._embedded.films;
 
-                for(var i=0; i < filmInfo.length; i++) {
-                    $('#appendarea').append("<tr><th scope='col'>" + i + "</th>"
-                                           + "<td>" + filmInfo[i].title + "</td>"
-                                           + "<td>대여</td></tr>");
+              for(var i=0; i < filmInfo.length; i++) {
+                  $('#append_area').append("<tr><th scope='col'>" + i + "</th>"
+                                         + "<td>" + filmInfo[i].title + "</td>"
+                                         + "<td>대여</td></tr>");
 
-                }
-
-
-            }
-        })
-    </script>
-<h3 th:text="'배우 ID : ' + ${actor_id}"></h3>
-
-<table class = "table table-striped table-hover" style="width: 60%; margin-left: auto; margin-right: auto;" id="appendarea">
+              }
 
 
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">작품명</th>
-    <th scope="col">대여여부</th>
-  </tr>
+          }
+      })
+  </script>
+  <h3 th:text="'배우 ID : ' + ${actor_id}" style="text-align: center"></h3>
 
+  <table class = "table table-striped table-hover" style="width: 60%; margin-left: auto; margin-right: auto;" id="append_area">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">작품명</th>
+      <th scope="col">대여여부</th>
+    </tr>
 
-</table>
+  </table>
 
 </body>
 </html>
