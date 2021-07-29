@@ -8,14 +8,17 @@
 
   <form th:action="@{/search}" th:object="${search_data}" method="post">
       <h3 th:text="검색대상"></h3>
-      <p><input type="radio" id="actor" value="actor" th:field="*{search_target}">
-         <label for="actor">배우</label></p>
-      <p><input type="radio" id="film" value="film" th:field="*{search_target}">
-          <label for="film">영화</label></p>
+      <p>
+          <input type="radio" id="actor" value="actor" th:field="*{search_target}">
+          <label for="actor">배우</label>
+          <input type="radio" id="film" value="film" th:field="*{search_target}">
+          <label for="film">영화</label>
+      </p>
       <h3 th:text="키워드"></h3>
-      <p><input type="text" th:field="*{search_keyword}"></p>
-
-      <p><input type="submit" value="검색"></p>
+      <p>
+          <input type="text" th:field="*{search_keyword}">
+          <input type="submit" value="검색">
+      </p>
   </form>
 
 </body>
