@@ -42,7 +42,7 @@ public class ActorController {
         return ResponseEntity.ok(actorModelAssembler.toCollectionModel(actors));
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/id/{id}")
     @ApiOperation(value = "id로 배우 정보 조회")
     public ResponseEntity<ActorModel> retrieveActor(@PathVariable int id) {
         return actorService.getActorById(id)
@@ -51,9 +51,9 @@ public class ActorController {
                 .orElseThrow(()-> new IdNotFoundException(id));
     }
 
-    @GetMapping
+    @GetMapping("/{name}")
     @ApiOperation(value = "이름으로 배우 정보 검색")
-    public ResponseEntity<CollectionModel<ActorModel>> searchActorByName(@NotNull String name) {
+    public ResponseEntity<CollectionModel<ActorModel>> searchActorByName(@PathVariable String name) {
 
         final List<Actor> actors = actorService.getActorByName(name);
 
