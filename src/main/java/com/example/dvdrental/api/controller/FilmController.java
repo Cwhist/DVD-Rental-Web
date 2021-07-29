@@ -72,7 +72,7 @@ public class FilmController {
 
     }
 
-    @GetMapping(path = "/actorid/{id}")
+    @GetMapping(path = "/actor-id/{id}")
     @ApiOperation(value = "배우 id로 영화 검색")
     public ResponseEntity<CollectionModel<FilmModel>> searchFilmByActorId(@PathVariable int id) {
 
