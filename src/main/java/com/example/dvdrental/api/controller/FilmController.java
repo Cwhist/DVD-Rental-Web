@@ -49,7 +49,7 @@ public class FilmController {
 
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/id/{id}")
     @ApiOperation(value = "id로 영화 조회")
     public ResponseEntity<FilmModel> retrieveFilm(@PathVariable int id) {
         return filmService.getFilmById(id)
@@ -58,9 +58,9 @@ public class FilmController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping(path = "/{title}")
     @ApiOperation(value = "제목으로 영화 검색")
-    public ResponseEntity<CollectionModel<FilmModel>> searchFilmByTitle(@NotNull String title) {
+    public ResponseEntity<CollectionModel<FilmModel>> searchFilmByTitle(@PathVariable String title) {
 
         final List<Film> films = filmService.getFilmByTitle(title);
 
