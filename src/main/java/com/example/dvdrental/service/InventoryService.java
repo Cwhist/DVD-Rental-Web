@@ -8,6 +8,4 @@ public interface InventoryService {
 
     List<Rental> getRentalListById(int id);
 
-    boolean checkRentableById(int id);
-
 }
