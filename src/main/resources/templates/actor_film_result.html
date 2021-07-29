@@ -13,7 +13,7 @@
   <script th:inline="javascript">
 
       $.ajax({
-          url: 'http://localhost:8080/api/films/actorid/' + [[${actor_id}]],
+          url: 'http://localhost:8080/api/films/actor-id/' + [[${actor_id}]],
           type: 'GET',
           success: function(data, textStatus) {
               console.log('data');
@@ -28,24 +28,32 @@
               for(var i=0; i < filmInfo.length; i++) {
                   $('#append_area').append("<tr><th scope='col'>" + i + "</th>"
                                          + "<td>" + filmInfo[i].title + "</td>"
+                                         + "<td>" + filmInfo[i].description + "</td>"
+                                         + "<td>" + filmInfo[i].length + "</td>"
+                                         + "<td>" + filmInfo[i].replacementCost + "</td>"
+                                         + "<td>" + filmInfo[i].rentalDuration + "</td>"
                                          + "<td>대여</td></tr>");
-
               }
-
-
           }
       })
   </script>
   <h3 th:text="'배우 ID : ' + ${actor_id}" style="text-align: center"></h3>
 
-  <table class = "table table-striped table-hover" style="width: 60%; margin-left: auto; margin-right: auto;" id="append_area">
+  <table class = "table table-striped table-hover" style="width: 80%; margin-left: auto; margin-right: auto;" id="append_area">
     <tr>
       <th scope="col">#</th>
       <th scope="col">작품명</th>
-      <th scope="col">대여여부</th>
+      <th scope="col">줄거리</th>
+      <th scope="col">상영시간</th>
+      <th scope="col">가격</th>
+      <th scope="col">대여일</th>
+      <th scope="col">대여하기</th>
     </tr>
 
   </table>
+  <div style="text-align: center">
+    <a href="javascript:history.back()">Back</a>
+  </div>
 
 </body>
 </html>
