@@ -39,7 +39,13 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public boolean isRentable(Film film) {
 
-        for(Inventory inventory : film.getInventoryList()) {
+        List<Inventory> inventoryList = film.getInventoryList();
+
+        if(inventoryList.isEmpty()) {
+            return false;
+        }
+
+        for(Inventory inventory : inventoryList) {
             for(Rental rental : inventory.getRentalList()) {
                 if(rental.getReturnDate() == null) return false;
             }
