@@ -10,7 +10,6 @@ import com.example.dvdrental.util.CollectionChecker;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +39,7 @@ public class FilmModelAssembler extends RepresentationModelAssemblerSupport<Film
         filmModel.setLength(entity.getLength());
         filmModel.setReplacementCost(entity.getReplacementCost());
 
-        if( !CollectionUtils.isEmpty(entity.getActors()) ) {
+        if( !CollectionChecker.isEmpty(entity.getActors()) ) {
             filmModel.setActors(toActorModel(entity.getActors()));
         }
 
