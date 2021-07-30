@@ -52,6 +52,21 @@ public class RentalController {
 
     }
 
+    @PostMapping(path = "/return")
+    @ApiOperation(value = "rentalId로 반납")
+    public ResponseEntity<RentalDto> returnByRentalId(@RequestParam Integer rentalId) {
+
+        if(!rentalService.isReturned(rentalId)) {
+            Rental rental = rentalService.returnFilmByRentalId(rentalId);
+
+            return ResponseEntity.ok(new RentalDto(rental.getRentalId()
+                    , rental.getInventoryId(), rental.getReturnDate()));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+    }
+
     @Getter
     @Setter
     @AllArgsConstructor

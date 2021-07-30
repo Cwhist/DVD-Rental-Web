@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <title>Return Page</title>
+  </head>
+<body>
+
+  <h3>대여번호 입력</h3>
+  <p>
+    <input type="number" id="inputId">
+    <button onclick="returnFilm($(inputId).val())">반납</button>
+  </p>
+
+<div>
+  <a href="javascript:history.back()">Back</a>
+</div>
+
+<script th:inline="javascript">
+
+  function returnFilm(rentalId) {
+
+      if(rentalId) {
+
+          $.ajax({
+              url: 'http://localhost:8080/api/rental/return',
+              type: 'POST',
+              data: {rentalId: rentalId},
+              success: function(data, textStatus) {
+
+                console.log('status');
+                console.log(textStatus);
+
+                alert("대여번호 " + data.rentalId + "번 " + data.returnDate + "에 반납되었습니다!");
+
+              },
+              error : function(error) {
+
+                alert("반납에 실패하셨습니다! 대여번호를 다시 확인해주세요!");
+
+              }
+          })
+
+      } else {
+
+        alert("잘못된 입력입니다!");
+
+      }
+
+  }
+
+</script>
+
+</body>
+</html>

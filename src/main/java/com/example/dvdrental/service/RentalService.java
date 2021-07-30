@@ -10,4 +10,7 @@ public interface RentalService {
 
     public Rental createNewRental(int inventoryId);
 
+    public Rental returnFilmByRentalId(int rentalId);
+
+    public boolean isReturned(int rentalId);
 }

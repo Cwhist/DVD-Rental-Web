@@ -31,5 +31,22 @@ public class RentalServiceImpl implements RentalService {
         return rentalRepository.save(rental);
     }
 
+    @Override
+    public Rental returnFilmByRentalId(int rentalId) {
 
+        Rental rental = rentalRepository.findById(rentalId)
+                        .orElseThrow(()-> new IdNotFoundException(rentalId));
+
+        rental.setReturnDate(new Timestamp(System.currentTimeMillis()));
+
+        return rentalRepository.save(rental);
+    }
+
+    @Override
+    public boolean isReturned(int rentalId) {
+
+        return (rentalRepository.findById(rentalId)
+                .orElseThrow(()-> new IdNotFoundException(rentalId))
+                .getReturnDate() != null);
+    }
 }

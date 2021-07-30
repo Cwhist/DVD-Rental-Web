@@ -15,4 +15,10 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/return")
+    public String returnPage() {
+
+        return "return_page";
+    }
+
 }
