@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <title>Result - Film / Inventory</title>
+</head>
+<body>
+
+<script th:inline="javascript">
+
+    function rentalInventory(id) {
+
+        console.log(id);
+
+        if(confirm("잠시 후에 안내되는 대여번호를 잘 기억해주세요! 반납 시에 입력하셔야 반납이 가능합니다! 대여하시겠습니까?")) {
+
+          $.ajax({
+              url: 'http://localhost:8080/api/rental',
+              type: 'POST',
+              data: {inventoryId: id},
+              success: function(data, textStatus) {
+
+                  console.log('rentalId');
+                  console.log(data);
+
+                  alert("대여번호는 " + data.rentalId + " 입니다!");
+
+                  $('#rentable' + data.inventoryId).html("대여불가");
+              }
+          })
+
+        }
+
+    }
+
+    $.ajax({
+        url: 'http://localhost:8080/api/films/' + [[${film_id}]] + '/inventories',
+        type: 'GET',
+        success: function(data, textStatus) {
+            console.log('data');
+            console.log(data);
+
+            for(var i=0; i < data.length; i++) {
+
+                $.ajax({
+                    url: 'http://localhost:8080/api/inventory/rentable/' + data[i],
+                    type: 'GET',
+                    success: function(data, textStatus) {
+                        console.log('inventoryRentableData');
+                        console.log(data);
+
+                        const inventoryRentableTd = "#rentable" + data.inventoryId;
+
+                        if(data.rentable) {
+                            $(inventoryRentableTd).append("<button onclick='rentalInventory(" + data.inventoryId + ")'>대여하기</button>");
+                        } else {
+                            $(inventoryRentableTd).append("대여불가");
+                        }
+
+                    }
+
+                })
+
+
+                $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                                       + "<td>" + data[i] + "</td>"
+                                       + "<td id='rentable" + data[i] + "'></td></tr>");
+
+            }
+
+        }
+    })
+</script>
+<h3 th:text="'영화 ID : ' + ${film_id}" style="text-align: center"></h3>
+
+<table class = "table table-striped table-hover" style="width: 60%; margin-left: auto; margin-right: auto;" id="append_area">
+
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">수납번호</th>
+    <th scope="col">대여여부</th>
+  </tr>
+
+</table>
+
+<div style="text-align: center">
+  <a href="javascript:history.back()">Back</a>
+</div>
+
+</body>
+</html>

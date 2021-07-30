@@ -4,6 +4,7 @@ import com.example.dvdrental.api.assembler.FilmModelAssembler;
 import com.example.dvdrental.api.representationmodel.FilmModel;
 import com.example.dvdrental.entity.Actor;
 import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.entity.Inventory;
 import com.example.dvdrental.exception.FilmNotFoundException;
 import com.example.dvdrental.exception.FilmTitleNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -103,6 +105,22 @@ public class FilmController {
         return ResponseEntity.ok(rentableDto);
     }
 
+    @GetMapping(path = "/{id}/inventories")
+    @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
+    public ResponseEntity<List<Integer>> getInventoryIdsByFilmId(@PathVariable int id) {
+
+        Film film = filmService.getFilmById(id)
+                    .orElseThrow(()-> new IdNotFoundException(id));
+
+        List<Integer> inventoryIdList = new ArrayList<>();
+
+        for(Inventory inventory : film.getInventoryList()) {
+            inventoryIdList.add(inventory.getInventoryId());
+        }
+
+        return ResponseEntity.ok(inventoryIdList);
+
+    }
 
     @PostMapping
     @ApiOperation(value = "영화 추가")

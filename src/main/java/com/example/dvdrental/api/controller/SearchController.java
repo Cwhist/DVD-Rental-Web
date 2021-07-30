@@ -33,6 +33,14 @@ public class SearchController {
         return "actor_film_result";
     }
 
+    @GetMapping(path = "/inventories/{filmId}")
+    public String searchInventoriesByFilmId(@PathVariable("filmId") int filmId, Model model) {
+
+        model.addAttribute("film_id", filmId);
+
+        return "film_inventory_result";
+
+    }
 
     @PostMapping
     public String doSearch(@ModelAttribute SearchDataVo searchDataVo, Model model) {
