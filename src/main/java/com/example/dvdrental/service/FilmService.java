@@ -19,4 +19,6 @@ public interface FilmService {
 
     void deleteFilm(Film film);
 
+    boolean isRentable(Film film);
+
 }

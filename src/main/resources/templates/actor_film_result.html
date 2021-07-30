@@ -26,13 +26,38 @@
               const filmInfo = parsedInfo._embedded.films;
 
               for(var i=0; i < filmInfo.length; i++) {
-                  $('#append_area').append("<tr><th scope='col'>" + i + "</th>"
+
+                  $.ajax({
+                      url: 'http://localhost:8080/api/films/rentable/' + filmInfo[i].filmId,
+                      type: 'GET',
+                      success: function(data, textStatus) {
+                          console.log('rentData');
+                          console.log(data);
+
+                          const jsonRentableInfo = JSON.stringify(data);
+
+                          const parsedRentableInfo = JSON.parse(jsonRentableInfo);
+
+                          let appendRentableTd = "#rentable" + parsedRentableInfo.filmId;
+
+                          if(parsedRentableInfo.rentable) {
+                            $(appendRentableTd).append("<a href='/search/inventories/" + parsedRentableInfo.filmId + "'>대여 가능</a>");
+                          }
+                          else {
+                            $(appendRentableTd).append("대여 불가");
+                          }
+
+                      }
+                  });
+
+                  $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
                                          + "<td>" + filmInfo[i].title + "</td>"
                                          + "<td>" + filmInfo[i].description + "</td>"
                                          + "<td>" + filmInfo[i].length + "</td>"
                                          + "<td>" + filmInfo[i].replacementCost + "</td>"
                                          + "<td>" + filmInfo[i].rentalDuration + "</td>"
-                                         + "<td>대여</td></tr>");
+                                         + "<td id='rentable" + filmInfo[i].filmId + "'></td></tr>");
+
               }
           }
       })
@@ -47,7 +72,7 @@
       <th scope="col">상영시간</th>
       <th scope="col">가격</th>
       <th scope="col">대여일</th>
-      <th scope="col">대여하기</th>
+      <th scope="col">대여확인</th>
     </tr>
 
   </table>

@@ -1,6 +1,8 @@
 package com.example.dvdrental.service;
 
 import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.entity.Inventory;
+import com.example.dvdrental.entity.Rental;
 import com.example.dvdrental.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +35,15 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void deleteFilm(Film film) { filmRepository.delete(film); }
+
+    @Override
+    public boolean isRentable(Film film) {
+
+        for(Inventory inventory : film.getInventoryList()) {
+            for(Rental rental : inventory.getRentalList()) {
+                if(rental.getReturnDate() == null) return false;
+            }
+        }
+        return true;
+    }
 }

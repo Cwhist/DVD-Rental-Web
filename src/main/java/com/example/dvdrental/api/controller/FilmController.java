@@ -12,6 +12,7 @@ import com.example.dvdrental.service.FilmService;
 import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,21 @@ public class FilmController {
 
     }
 
+    @GetMapping(path = "/rentable/{id}")
+    @ApiOperation(value = "영화 id로 대여 가능 여부 확인")
+    public ResponseEntity<FilmRentableDto> checkRentableByFilmId(@PathVariable int id) {
+
+        Film film = filmService.getFilmById(id)
+                    .orElseThrow(()-> new IdNotFoundException(id));
+
+        boolean result = filmService.isRentable(film);
+
+        FilmRentableDto rentableDto = new FilmRentableDto(id, result);
+
+        return ResponseEntity.ok(rentableDto);
+    }
+
+
     @PostMapping
     @ApiOperation(value = "영화 추가")
     public ResponseEntity<FilmModel> insertNewFilm(@RequestBody @Valid FilmDto request) {
@@ -137,6 +153,16 @@ public class FilmController {
         filmService.deleteFilm(film);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    static class FilmRentableDto {
+
+        private int filmId;
+        private boolean isRentable;
+
     }
 
 

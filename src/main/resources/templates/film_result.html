@@ -25,19 +25,40 @@
 
                 const filmInfo = parsedInfo._embedded.films;
 
-                $('#replyarea').append("search_keyword: " + [[${search_keyword}]]);
-
                 for(var i=0; i < filmInfo.length; i++) {
-                    $('#append_area').append("<tr><th scope='col'>" + i + "</th>"
-                                           + "<td>" + filmInfo[i].title + "</td>"
-                                           + "<td>" + filmInfo[i].description + "</td>"
-                                           + "<td>" + filmInfo[i].length + "</td>"
-                                           + "<td>" + filmInfo[i].replacementCost + "</td>"
-                                           + "<td>" + filmInfo[i].rentalDuration + "</td>"
-                                           + "<td> <a href='/search/'>대여</a></td></tr>");
 
-                }
+                  $.ajax({
+                      url: 'http://localhost:8080/api/films/rentable/' + filmInfo[i].filmId,
+                      type: 'GET',
+                      success: function(data, textStatus) {
+                          console.log('rentData');
+                          console.log(data);
 
+                          const jsonRentableInfo = JSON.stringify(data);
+
+                          const parsedRentableInfo = JSON.parse(jsonRentableInfo);
+
+                          let appendRentableTd = "#rentable" + parsedRentableInfo.filmId;
+
+                          if(parsedRentableInfo.rentable) {
+                            $(appendRentableTd).append("<a href='/search/inventories/" + parsedRentableInfo.filmId + "'>대여 가능</a>");
+                          }
+                          else {
+                            $(appendRentableTd).append("대여 불가");
+                          }
+
+                      }
+                  });
+
+                  $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                                         + "<td>" + filmInfo[i].title + "</td>"
+                                         + "<td>" + filmInfo[i].description + "</td>"
+                                         + "<td>" + filmInfo[i].length + "</td>"
+                                         + "<td>" + filmInfo[i].replacementCost + "</td>"
+                                         + "<td>" + filmInfo[i].rentalDuration + "</td>"
+                                         + "<td id='rentable" + filmInfo[i].filmId + "'></td></tr>");
+
+              }
 
             }
         })
@@ -45,7 +66,7 @@
 <h3 th:text="'검색대상 : ' + ${search_target}" style="text-align: center">검색대상</h3>
 <h3 th:text="'키워드 : ' + ${search_keyword}" style="text-align: center">키워드</h3>
 
-<table class = "table table-striped table-hover" style="width: 60%; margin-left: auto; margin-right: auto;" id="append_area">
+<table class = "table table-striped table-hover" style="width: 80%; margin-left: auto; margin-right: auto;" id="append_area">
 
 
   <tr>
