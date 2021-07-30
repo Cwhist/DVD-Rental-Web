@@ -25,6 +25,15 @@ public class SearchController {
 
     }
 
+    @GetMapping(path = "/actor-film/{actorId}")
+    public String searchFilmByActorId(@PathVariable("actorId") int actorId, Model model) {
+
+        model.addAttribute("actor_id", actorId);
+
+        return "actor_film_result";
+    }
+
+
     @PostMapping
     public String doSearch(@ModelAttribute SearchDataVo searchDataVo, Model model) {
 
@@ -37,12 +46,6 @@ public class SearchController {
             return "film_result";
     }
 
-    @GetMapping(path = "/actor-film/{id}")
-    public String searchFilmByActorId(@PathVariable("id") int id, Model model) {
 
-        model.addAttribute("actor_id", id);
-
-        return "actor_film_result";
-    }
 
 }
