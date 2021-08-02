@@ -68,7 +68,7 @@ public class FilmController {
     @ApiOperation(value = "제목으로 영화 검색")
     public ResponseEntity<CollectionModel<FilmModel>> searchFilmByTitle(@PathVariable String title) {
 
-        final List<Film> films = filmService.getFilmByTitle(title);
+        final List<Film> films = filmService.getFilmsByTitle(title);
 
         if(CollectionChecker.isEmpty(films))
             throw new FilmTitleNotFoundException(title);

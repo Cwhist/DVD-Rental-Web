@@ -25,7 +25,7 @@ public class FilmServiceImpl implements FilmService {
     public Optional<Film> getFilmById(int id) { return filmRepository.findById(id); }
 
     @Override
-    public List<Film> getFilmByTitle(String title) { return filmRepository.searchByTitleLike(title); }
+    public List<Film> getFilmsByTitle(String title) { return filmRepository.getFilmsByTitleLike(title); }
 
     @Override
     public Film insertNewFilm(Film film) { return filmRepository.save(film); }
