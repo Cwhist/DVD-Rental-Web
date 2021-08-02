@@ -1,7 +1,5 @@
 package com.example.dvdrental.api.controller;
 
-import com.example.dvdrental.api.assembler.RentalModelAssembler;
-import com.example.dvdrental.api.representationmodel.RentalModel;
 import com.example.dvdrental.entity.Rental;
 import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.RentalService;
@@ -25,18 +23,6 @@ public class RentalController {
 
     @Autowired
     RentalService rentalService;
-
-    @Autowired
-    RentalModelAssembler rentalModelAssembler;
-
-    @GetMapping(path = "/{rentalId}")
-    @ApiOperation(value = "대여 id로 대여 정보 조회")
-    public ResponseEntity<RentalModel> retrieveRental(@PathVariable int rentalId) {
-        return rentalService.getRentalById(rentalId)
-                .map(rentalModelAssembler::toModel)
-                .map(ResponseEntity::ok)
-                .orElseThrow(()-> new IdNotFoundException(rentalId));
-    }
 
     @PostMapping
     @ApiOperation(value = "새 대여 기록을 작성함")
