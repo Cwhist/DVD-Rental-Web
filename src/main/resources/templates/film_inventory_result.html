@@ -44,31 +44,20 @@
             console.log('data');
             console.log(data);
 
-            for(var i=0; i < data.length; i++) {
+            inventoryInfo = data._embedded.inventories;
 
-                $.ajax({
-                    url: 'http://localhost:8080/api/inventory/rentable/' + data[i],
-                    type: 'GET',
-                    success: function(data, textStatus) {
-                        console.log('inventoryRentableData');
-                        console.log(data);
+            for(var i=0; i < inventoryInfo.length; i++) {
 
-                        const inventoryRentableTd = "#rentable" + data.inventoryId;
+                if(inventoryInfo[i].rentable) {
+                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                                       + "<td>" + inventoryInfo[i].inventoryId + "</td>"
+                                       + "<td id='rentable" + inventoryInfo[i].inventoryId + "'><button onclick='rentalInventory(" + inventoryInfo[i].inventoryId + ")'>대여하기</button></td></tr>");
 
-                        if(data.rentable) {
-                            $(inventoryRentableTd).append("<button onclick='rentalInventory(" + data.inventoryId + ")'>대여하기</button>");
-                        } else {
-                            $(inventoryRentableTd).append("대여불가");
-                        }
-
-                    }
-
-                })
-
-
-                $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
-                                       + "<td>" + data[i] + "</td>"
-                                       + "<td id='rentable" + data[i] + "'></td></tr>");
+                } else {
+                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                                       + "<td>" + inventoryInfo[i].inventoryId + "</td>"
+                                       + "<td id='rentable" + inventoryInfo[i].inventoryId + "'>대여불가</td></tr>");
+                }
 
             }
 

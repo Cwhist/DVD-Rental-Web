@@ -1,7 +1,9 @@
 package com.example.dvdrental.api.controller;
 
 import com.example.dvdrental.api.assembler.FilmModelAssembler;
+import com.example.dvdrental.api.assembler.InventoryModelAssembler;
 import com.example.dvdrental.api.representationmodel.FilmModel;
+import com.example.dvdrental.api.representationmodel.InventoryModel;
 import com.example.dvdrental.entity.Actor;
 import com.example.dvdrental.entity.Film;
 import com.example.dvdrental.entity.Inventory;
@@ -10,6 +12,7 @@ import com.example.dvdrental.exception.FilmTitleNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.ActorService;
 import com.example.dvdrental.service.FilmService;
+import com.example.dvdrental.service.InventoryService;
 import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +41,9 @@ public class FilmController {
 
     @Autowired
     ActorService actorService;
+
+    @Autowired
+    InventoryModelAssembler inventoryModelAssembler;
 
     @Autowired
     FilmModelAssembler filmModelAssembler;
@@ -93,18 +99,12 @@ public class FilmController {
 
     @GetMapping(path = "/{id}/inventories")
     @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
-    public ResponseEntity<List<Integer>> getInventoryIdsByFilmId(@PathVariable int id) {
+    public ResponseEntity<CollectionModel<InventoryModel>> getInventoryIdsByFilmId(@PathVariable int id) {
 
         Film film = filmService.getFilmById(id)
                     .orElseThrow(()-> new IdNotFoundException(id));
 
-        List<Integer> inventoryIdList = new ArrayList<>();
-
-        for(Inventory inventory : film.getInventoryList()) {
-            inventoryIdList.add(inventory.getInventoryId());
-        }
-
-        return ResponseEntity.ok(inventoryIdList);
+        return ResponseEntity.ok(inventoryModelAssembler.toCollectionModel(film.getInventoryList()));
 
     }
 
