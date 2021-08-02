@@ -11,7 +11,7 @@ public interface FilmService {
 
     Optional<Film> getFilmById(int id);
 
-    List<Film> getFilmByTitle(String title);
+    List<Film> getFilmsByTitle(String title);
 
     Film insertNewFilm(Film film);
 

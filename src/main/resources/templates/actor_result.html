@@ -12,29 +12,40 @@
 
     <script th:inline="javascript">
 
-        $.ajax({
-            url: 'http://localhost:8080/api/actors/' + [[${search_keyword}]],
-            type: 'GET',
-            success: function(data, textStatus) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', 'http://localhost:8080/api/actors/' + [[${search_keyword}]], true);
+
+        xhr.send();
+
+        xhr.onload = () => {
+
+            if(xhr.status == 200) {
+                // 통신 성공
                 console.log('data');
-                console.log(data);
+                console.log(xhr.responseText);
 
-                const jsonInfo = JSON.stringify(data);
-
-                const parsedInfo = JSON.parse(jsonInfo);
+                const parsedInfo = JSON.parse(xhr.responseText);
 
                 const actorInfo = parsedInfo._embedded.actors;
 
+                var appendArea = document.getElementById("append_area");
+
                 for(var i=0; i < actorInfo.length; i++) {
+
                     $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
-                                           + "<td>" + actorInfo[i].firstName + " " + actorInfo[i].lastName + "</td>"
-                                           + "<td> <a href='/search/actor-film/" + actorInfo[i].actorId+ "'>더보기</a></td></tr>");
+                                            + "<td>" + actorInfo[i].firstName + " " + actorInfo[i].lastName + "</td>"
+                                            + "<td> <a href='/search/actor-film/" + actorInfo[i].actorId+ "'>더보기</a></td></tr>");
 
                 }
 
-
+            } else {
+                // 통신 실패
+                console.log("통신 실패");
             }
-        })
+
+        }
+
     </script>
     <h3 th:text="'검색대상 : ' + ${search_target}" style="text-align: center">검색대상</h3>
     <h3 th:text="'키워드 : ' + ${search_keyword}" style="text-align: center">키워드</h3>

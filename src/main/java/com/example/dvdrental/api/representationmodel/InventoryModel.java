@@ -1,27 +1,21 @@
 package com.example.dvdrental.api.representationmodel;
 
-import com.example.dvdrental.entity.Rental;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import javax.persistence.Column;
-import java.sql.Timestamp;
-
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Relation(collectionRelation = "rentals", itemRelation = "rental")
+@Relation(collectionRelation = "inventories", itemRelation = "inventory")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RentalModel extends RepresentationModel<RentalModel> {
+public class InventoryModel extends RepresentationModel<InventoryModel> {
 
-    private int rentalId;
     private int inventoryId;
-    private Timestamp rentalDate;
-    private Timestamp returnDate;
+    private int filmId;
+    private boolean rentable;
 
 }

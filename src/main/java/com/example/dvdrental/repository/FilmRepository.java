@@ -10,6 +10,6 @@ import java.util.List;
 public interface FilmRepository extends JpaRepository<Film, Integer> {
 
     @Query("SELECT film FROM Film film WHERE film.title LIKE %:title%")
-    List<Film> searchByTitleLike(@Param("title") String title);
+    List<Film> getFilmsByTitleLike(@Param("title") String title);
 
 }

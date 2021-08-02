@@ -1,11 +1,16 @@
 package com.example.dvdrental.api.controller;
 
+import com.example.dvdrental.api.assembler.InventoryModelAssembler;
+import com.example.dvdrental.api.representationmodel.InventoryModel;
+import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.InventoryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,24 +24,23 @@ public class InventoryController {
     @Autowired
     InventoryService inventoryService;
 
-    @GetMapping(path = "/rentable/{id}")
-    @ApiOperation(value = "인벤토리 id로 대여 가능 여부 확인")
-    public ResponseEntity<InventoryRentableDto> checkRentableByInventoryId(@PathVariable int id) {
+    @Autowired
+    InventoryModelAssembler inventoryModelAssembler;
 
-        boolean result = inventoryService.checkRentableById(id);
-
-        InventoryRentableDto rentableDto = new InventoryRentableDto(id, result);
-
-        return ResponseEntity.ok(rentableDto);
+    @GetMapping(path = "/{id}")
+    @ApiOperation(value = "인벤토리 id로 정보 조회")
+    public ResponseEntity<InventoryModel> retrieveInventory(@PathVariable int id) {
+        return inventoryService.getInventoryById(id)
+                .map(inventoryModelAssembler::toModel)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    static class InventoryRentableDto {
+    @GetMapping(path = "/film/{filmId}")
+    @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
+    public ResponseEntity<CollectionModel<InventoryModel>> getInventoryIdsByFilmId(@PathVariable int filmId) {
 
-        private int inventoryId;
-        private boolean rentable;
+        return ResponseEntity.ok(inventoryModelAssembler.toCollectionModel(inventoryService.getInventoriesByFilmId(filmId)));
 
     }
 

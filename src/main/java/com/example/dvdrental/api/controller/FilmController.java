@@ -1,7 +1,9 @@
 package com.example.dvdrental.api.controller;
 
 import com.example.dvdrental.api.assembler.FilmModelAssembler;
+import com.example.dvdrental.api.assembler.InventoryModelAssembler;
 import com.example.dvdrental.api.representationmodel.FilmModel;
+import com.example.dvdrental.api.representationmodel.InventoryModel;
 import com.example.dvdrental.entity.Actor;
 import com.example.dvdrental.entity.Film;
 import com.example.dvdrental.entity.Inventory;
@@ -10,6 +12,7 @@ import com.example.dvdrental.exception.FilmTitleNotFoundException;
 import com.example.dvdrental.exception.IdNotFoundException;
 import com.example.dvdrental.service.ActorService;
 import com.example.dvdrental.service.FilmService;
+import com.example.dvdrental.service.InventoryService;
 import com.example.dvdrental.util.CollectionChecker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -65,7 +68,7 @@ public class FilmController {
     @ApiOperation(value = "제목으로 영화 검색")
     public ResponseEntity<CollectionModel<FilmModel>> searchFilmByTitle(@PathVariable String title) {
 
-        final List<Film> films = filmService.getFilmByTitle(title);
+        final List<Film> films = filmService.getFilmsByTitle(title);
 
         if(CollectionChecker.isEmpty(films))
             throw new FilmTitleNotFoundException(title);
@@ -88,37 +91,6 @@ public class FilmController {
             throw new FilmNotFoundException(id);
 
         return ResponseEntity.ok(filmModelAssembler.toCollectionModel(films));
-
-    }
-
-    @GetMapping(path = "/rentable/{id}")
-    @ApiOperation(value = "영화 id로 대여 가능 여부 확인")
-    public ResponseEntity<FilmRentableDto> checkRentableByFilmId(@PathVariable int id) {
-
-        Film film = filmService.getFilmById(id)
-                    .orElseThrow(()-> new IdNotFoundException(id));
-
-        boolean result = filmService.isRentable(film);
-
-        FilmRentableDto rentableDto = new FilmRentableDto(id, result);
-
-        return ResponseEntity.ok(rentableDto);
-    }
-
-    @GetMapping(path = "/{id}/inventories")
-    @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
-    public ResponseEntity<List<Integer>> getInventoryIdsByFilmId(@PathVariable int id) {
-
-        Film film = filmService.getFilmById(id)
-                    .orElseThrow(()-> new IdNotFoundException(id));
-
-        List<Integer> inventoryIdList = new ArrayList<>();
-
-        for(Inventory inventory : film.getInventoryList()) {
-            inventoryIdList.add(inventory.getInventoryId());
-        }
-
-        return ResponseEntity.ok(inventoryIdList);
 
     }
 
@@ -172,17 +144,6 @@ public class FilmController {
 
         return ResponseEntity.noContent().build();
     }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    static class FilmRentableDto {
-
-        private int filmId;
-        private boolean isRentable;
-
-    }
-
 
     @Getter
     @Setter

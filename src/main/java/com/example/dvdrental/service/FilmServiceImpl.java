@@ -25,7 +25,7 @@ public class FilmServiceImpl implements FilmService {
     public Optional<Film> getFilmById(int id) { return filmRepository.findById(id); }
 
     @Override
-    public List<Film> getFilmByTitle(String title) { return filmRepository.searchByTitleLike(title); }
+    public List<Film> getFilmsByTitle(String title) { return filmRepository.getFilmsByTitleLike(title); }
 
     @Override
     public Film insertNewFilm(Film film) { return filmRepository.save(film); }
@@ -47,9 +47,9 @@ public class FilmServiceImpl implements FilmService {
 
         for(Inventory inventory : inventoryList) {
             for(Rental rental : inventory.getRentalList()) {
-                if(rental.getReturnDate() == null) return false;
+                if(rental.getReturnDate() != null) return true;
             }
         }
-        return true;
+        return false;
     }
 }

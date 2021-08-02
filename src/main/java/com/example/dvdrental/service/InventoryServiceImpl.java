@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Id;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,6 +20,11 @@ public class InventoryServiceImpl implements InventoryService {
     InventoryRepository inventoryRepository;
 
     @Override
+    public Optional<Inventory> getInventoryById(int id) {
+        return inventoryRepository.findById(id);
+    }
+
+    @Override
     public List<Rental> getRentalListById(int id) {
         Inventory target = inventoryRepository.findById(id)
                             .orElseThrow(()-> new IdNotFoundException(id));
@@ -26,10 +32,15 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public boolean checkRentableById(int id) {
-        Inventory target = inventoryRepository.findById(id)
-                            .orElseThrow(()-> new IdNotFoundException(id));
-        List<Rental> rentalList = target.getRentalList();
+    public List<Inventory> getInventoriesByFilmId(int filmId) {
+
+        return inventoryRepository.getInventoriesByFilmId(filmId);
+    }
+
+    @Override
+    public boolean isRentable(Inventory inventory) {
+
+        List<Rental> rentalList = inventory.getRentalList();
 
         // Return date null means it hasn't returned
         for(Rental rental : rentalList) {
