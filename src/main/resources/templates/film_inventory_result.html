@@ -21,7 +21,6 @@
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST', 'http://localhost:8080/api/rental', true);
-
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.send("inventoryId="+ id);
@@ -39,24 +38,7 @@
                 $('#rentable' + parsedInfo.inventoryId).html("대여불가");
 
             }
-
-<!--            $.ajax({-->
-<!--                url: 'http://localhost:8080/api/rental',-->
-<!--                type: 'POST',-->
-<!--                data: {inventoryId: id},-->
-<!--                success: function(data, textStatus) {-->
-
-<!--                    console.log('rentalId');-->
-<!--                    console.log(data);-->
-
-<!--                    alert("대여번호는 " + data.rentalId + " 입니다!");-->
-
-<!--                    $('#rentable' + data.inventoryId).html("대여불가");-->
-<!--                }-->
-<!--            })-->
-
         }
-
     }
 
     var xhr = new XMLHttpRequest();
@@ -93,33 +75,6 @@
 
     }
 
-<!--    $.ajax({-->
-<!--        url: 'http://localhost:8080/api/inventory/film/' + [[${film_id}]],-->
-<!--        type: 'GET',-->
-<!--        success: function(data, textStatus) {-->
-<!--            console.log('data');-->
-<!--            console.log(data);-->
-
-<!--            inventoryInfo = data._embedded.inventories;-->
-
-<!--            for(var i=0; i < inventoryInfo.length; i++) {-->
-
-<!--                if(inventoryInfo[i].rentable) {-->
-<!--                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"-->
-<!--                                       + "<td>" + inventoryInfo[i].inventoryId + "</td>"-->
-<!--                                       + "<td id='rentable" + inventoryInfo[i].inventoryId + "'>"-->
-<!--                                          + "<button onclick='rentalInventory(" + inventoryInfo[i].inventoryId + ")'>대여하기</button></td></tr>");-->
-
-<!--                } else {-->
-<!--                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"-->
-<!--                                       + "<td>" + inventoryInfo[i].inventoryId + "</td>"-->
-<!--                                       + "<td id='rentable" + inventoryInfo[i].inventoryId + "'>대여불가</td></tr>");-->
-<!--                }-->
-
-<!--            }-->
-
-<!--        }-->
-<!--    })-->
 </script>
 <h3 th:text="'영화 ID : ' + ${film_id}" style="text-align: center"></h3>
 

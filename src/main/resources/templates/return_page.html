@@ -27,7 +27,6 @@
           var xhr = new XMLHttpRequest();
 
           xhr.open('POST', 'http://localhost:8080/api/rental/return', true);
-
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
           xhr.send("rentalId=" + rentalId);
@@ -52,32 +51,11 @@
                   }
               }
           };
-
-<!--          $.ajax({-->
-<!--              url: 'http://localhost:8080/api/rental/return',-->
-<!--              type: 'POST',-->
-<!--              data: {rentalId: rentalId},-->
-<!--              success: function(data, textStatus) {-->
-
-<!--                console.log('status');-->
-<!--                console.log(textStatus);-->
-
-<!--                alert("대여번호 " + data.rentalId + "번 " + data.returnDate + "에 반납되었습니다!");-->
-
-<!--              },-->
-<!--              error : function(error) {-->
-
-<!--                alert("반납에 실패하셨습니다! 대여번호를 다시 확인해주세요!");-->
-
-<!--              }-->
-<!--          })-->
-
       } else {
 
         alert("잘못된 입력입니다!");
 
       }
-
   }
 
 </script>
