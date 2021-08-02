@@ -47,9 +47,9 @@ public class FilmServiceImpl implements FilmService {
 
         for(Inventory inventory : inventoryList) {
             for(Rental rental : inventory.getRentalList()) {
-                if(rental.getReturnDate() == null) return false;
+                if(rental.getReturnDate() != null) return true;
             }
         }
-        return true;
+        return false;
     }
 }
