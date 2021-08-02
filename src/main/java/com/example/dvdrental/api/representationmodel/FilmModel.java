@@ -23,6 +23,7 @@ public class FilmModel extends RepresentationModel<FilmModel> {
     private int rentalDuration;
     private int length;
     private float replacementCost;
+    private boolean isRentable;
     private List<ActorModel> actors;
 
 }

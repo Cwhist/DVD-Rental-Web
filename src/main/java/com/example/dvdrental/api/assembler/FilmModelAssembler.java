@@ -6,7 +6,9 @@ import com.example.dvdrental.api.representationmodel.ActorModel;
 import com.example.dvdrental.api.representationmodel.FilmModel;
 import com.example.dvdrental.entity.Actor;
 import com.example.dvdrental.entity.Film;
+import com.example.dvdrental.service.FilmService;
 import com.example.dvdrental.util.CollectionChecker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class FilmModelAssembler extends RepresentationModelAssemblerSupport<Film, FilmModel> {
+
+    @Autowired
+    FilmService filmService;
 
     public FilmModelAssembler() { super(FilmController.class, FilmModel.class); }
 
@@ -38,6 +43,7 @@ public class FilmModelAssembler extends RepresentationModelAssemblerSupport<Film
         filmModel.setRentalDuration(entity.getRentalDuration());
         filmModel.setLength(entity.getLength());
         filmModel.setReplacementCost(entity.getReplacementCost());
+        filmModel.setRentable(filmService.isRentable(entity));
 
         if( !CollectionChecker.isEmpty(entity.getActors()) ) {
             filmModel.setActors(toActorModel(entity.getActors()));

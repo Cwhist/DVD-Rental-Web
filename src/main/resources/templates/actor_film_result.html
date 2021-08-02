@@ -27,36 +27,24 @@
 
               for(var i=0; i < filmInfo.length; i++) {
 
-                  $.ajax({
-                      url: 'http://localhost:8080/api/films/rentable/' + filmInfo[i].filmId,
-                      type: 'GET',
-                      success: function(data, textStatus) {
-                          console.log('rentData');
-                          console.log(data);
-
-                          const jsonRentableInfo = JSON.stringify(data);
-
-                          const parsedRentableInfo = JSON.parse(jsonRentableInfo);
-
-                          let appendRentableTd = "#rentable" + parsedRentableInfo.filmId;
-
-                          if(parsedRentableInfo.rentable) {
-                            $(appendRentableTd).append("<a href='/search/inventories/" + parsedRentableInfo.filmId + "'>대여 가능</a>");
-                          }
-                          else {
-                            $(appendRentableTd).append("대여 불가");
-                          }
-
-                      }
-                  });
-
-                  $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                  if(filmInfo[i].rentable) {
+                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
                                          + "<td>" + filmInfo[i].title + "</td>"
                                          + "<td>" + filmInfo[i].description + "</td>"
                                          + "<td>" + filmInfo[i].length + "</td>"
                                          + "<td>" + filmInfo[i].replacementCost + "</td>"
                                          + "<td>" + filmInfo[i].rentalDuration + "</td>"
-                                         + "<td id='rentable" + filmInfo[i].filmId + "'></td></tr>");
+                                         + "<td><a href='/search/inventories/" + filmInfo[i].filmId + "'>대여 가능</a></td></tr>");
+                  }
+                  else {
+                    $('#append_area').append("<tr><th scope='col'>" + (i+1) + "</th>"
+                                         + "<td>" + filmInfo[i].title + "</td>"
+                                         + "<td>" + filmInfo[i].description + "</td>"
+                                         + "<td>" + filmInfo[i].length + "</td>"
+                                         + "<td>" + filmInfo[i].replacementCost + "</td>"
+                                         + "<td>" + filmInfo[i].rentalDuration + "</td>"
+                                         + "<td>대여불가</td></tr>");
+                  }
 
               }
           }

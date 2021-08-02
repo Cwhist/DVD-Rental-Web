@@ -91,20 +91,6 @@ public class FilmController {
 
     }
 
-    @GetMapping(path = "/rentable/{id}")
-    @ApiOperation(value = "영화 id로 대여 가능 여부 확인")
-    public ResponseEntity<FilmRentableDto> checkRentableByFilmId(@PathVariable int id) {
-
-        Film film = filmService.getFilmById(id)
-                    .orElseThrow(()-> new IdNotFoundException(id));
-
-        boolean result = filmService.isRentable(film);
-
-        FilmRentableDto rentableDto = new FilmRentableDto(id, result);
-
-        return ResponseEntity.ok(rentableDto);
-    }
-
     @GetMapping(path = "/{id}/inventories")
     @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
     public ResponseEntity<List<Integer>> getInventoryIdsByFilmId(@PathVariable int id) {
@@ -172,17 +158,6 @@ public class FilmController {
 
         return ResponseEntity.noContent().build();
     }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    static class FilmRentableDto {
-
-        private int filmId;
-        private boolean isRentable;
-
-    }
-
 
     @Getter
     @Setter
