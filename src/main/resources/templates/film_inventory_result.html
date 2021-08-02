@@ -38,7 +38,7 @@
     }
 
     $.ajax({
-        url: 'http://localhost:8080/api/films/' + [[${film_id}]] + '/inventories',
+        url: 'http://localhost:8080/api/inventory/film/' + [[${film_id}]],
         type: 'GET',
         success: function(data, textStatus) {
             console.log('data');

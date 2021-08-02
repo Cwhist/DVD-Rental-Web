@@ -32,6 +32,12 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    public List<Inventory> getInventoriesByFilmId(int filmId) {
+
+        return inventoryRepository.getInventoriesByFilmId(filmId);
+    }
+
+    @Override
     public boolean isRentable(Inventory inventory) {
 
         List<Rental> rentalList = inventory.getRentalList();

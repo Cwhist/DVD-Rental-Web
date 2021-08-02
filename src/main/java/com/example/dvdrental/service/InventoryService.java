@@ -10,6 +10,8 @@ public interface InventoryService {
 
     Optional<Inventory> getInventoryById(int id);
 
+    List<Inventory> getInventoriesByFilmId(int filmId);
+
     List<Rental> getRentalListById(int id);
 
     boolean isRentable(Inventory inventory);

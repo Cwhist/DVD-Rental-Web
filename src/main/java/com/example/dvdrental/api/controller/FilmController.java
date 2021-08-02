@@ -43,9 +43,6 @@ public class FilmController {
     ActorService actorService;
 
     @Autowired
-    InventoryModelAssembler inventoryModelAssembler;
-
-    @Autowired
     FilmModelAssembler filmModelAssembler;
 
     @GetMapping(path = "/all")
@@ -94,17 +91,6 @@ public class FilmController {
             throw new FilmNotFoundException(id);
 
         return ResponseEntity.ok(filmModelAssembler.toCollectionModel(films));
-
-    }
-
-    @GetMapping(path = "/{id}/inventories")
-    @ApiOperation(value = "영화 id로 Inventory 리스트 불러오기")
-    public ResponseEntity<CollectionModel<InventoryModel>> getInventoryIdsByFilmId(@PathVariable int id) {
-
-        Film film = filmService.getFilmById(id)
-                    .orElseThrow(()-> new IdNotFoundException(id));
-
-        return ResponseEntity.ok(inventoryModelAssembler.toCollectionModel(film.getInventoryList()));
 
     }
 
