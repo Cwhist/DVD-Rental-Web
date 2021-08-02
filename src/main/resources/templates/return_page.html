@@ -24,24 +24,53 @@
 
       if(rentalId) {
 
-          $.ajax({
-              url: 'http://localhost:8080/api/rental/return',
-              type: 'POST',
-              data: {rentalId: rentalId},
-              success: function(data, textStatus) {
+          var xhr = new XMLHttpRequest();
 
-                console.log('status');
-                console.log(textStatus);
+          xhr.open('POST', 'http://localhost:8080/api/rental/return', true);
 
-                alert("대여번호 " + data.rentalId + "번 " + data.returnDate + "에 반납되었습니다!");
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-              },
-              error : function(error) {
+          xhr.send("rentalId=" + rentalId);
 
-                alert("반납에 실패하셨습니다! 대여번호를 다시 확인해주세요!");
+          xhr.onload = () => {
 
+              if(xhr.readyState === 4) {
+                  if(xhr.status === 200) {
+
+                      console.log('data');
+
+                      const parsedInfo = JSON.parse(xhr.responseText);
+
+                      console.log(parsedInfo);
+
+                      alert("대여번호 " + parsedInfo.rentalId + "번 " + parsedInfo.returnDate + "에 반납되었습니다!");
+
+                  } else {
+
+                      alert("반납에 실패하셨습니다! 대여번호를 다시 확인해주세요!");
+
+                  }
               }
-          })
+          };
+
+<!--          $.ajax({-->
+<!--              url: 'http://localhost:8080/api/rental/return',-->
+<!--              type: 'POST',-->
+<!--              data: {rentalId: rentalId},-->
+<!--              success: function(data, textStatus) {-->
+
+<!--                console.log('status');-->
+<!--                console.log(textStatus);-->
+
+<!--                alert("대여번호 " + data.rentalId + "번 " + data.returnDate + "에 반납되었습니다!");-->
+
+<!--              },-->
+<!--              error : function(error) {-->
+
+<!--                alert("반납에 실패하셨습니다! 대여번호를 다시 확인해주세요!");-->
+
+<!--              }-->
+<!--          })-->
 
       } else {
 
