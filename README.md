@@ -2,7 +2,9 @@
 
 ### 1. 개요
 
-  PostgreSQL의 Sample DB인 dvdrental을 기반으로 만든 영화 대여 서비스를 제공하는 웹 사이트
+  PostgreSQL의 Sample DB인 *dvdrental을 기반으로 만든 영화 대여 서비스를 제공하는 웹 사이트
+  
+  *dvdrental DB : https://www.postgresqltutorial.com/postgresql-sample-database/
   
 ### 2. 기술 스택
 
