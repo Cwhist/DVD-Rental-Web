@@ -8,7 +8,7 @@
   
 ### 2. 기술 스택
 
-  Spring Boot + Spring Data JPA + Spring Rest with HATEOAS + PostgreSQL DB
+  Spring Boot + Spring Data JPA + REST API + PostgreSQL DB
   
   
 ### 3. 기능
