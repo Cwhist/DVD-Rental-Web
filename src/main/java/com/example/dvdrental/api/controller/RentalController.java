@@ -26,9 +26,9 @@ public class RentalController {
 
     @PostMapping
     @ApiOperation(value = "새 대여 기록을 작성함")
-    public ResponseEntity<RentalDto> createNewRental(@RequestParam Integer inventoryId) {
+    public ResponseEntity<RentalDto> createNewRental(@RequestBody RentalDto dto) {
 
-        Rental rental = rentalService.createNewRental(inventoryId);
+        Rental rental = rentalService.createNewRental(dto.getInventoryId());
 
         RentalDto rentalDto = new RentalDto();
         rentalDto.setRentalId(rental.getRentalId());
@@ -40,13 +40,14 @@ public class RentalController {
 
     @PostMapping(path = "/return")
     @ApiOperation(value = "rentalId로 반납")
-    public ResponseEntity<RentalDto> returnByRentalId(@RequestParam Integer rentalId) {
+    public ResponseEntity<RentalDto> returnByRentalId(@RequestBody RentalDto dto) {
 
-        if(!rentalService.isReturned(rentalId)) {
-            Rental rental = rentalService.returnFilmByRentalId(rentalId);
+        if(!rentalService.isReturned(dto.rentalId)) {
+            Rental rental = rentalService.returnFilmByRentalId(dto.rentalId);
+            dto.setInventoryId(rental.getInventoryId());
+            dto.setReturnDate(rental.getReturnDate());
 
-            return ResponseEntity.ok(new RentalDto(rental.getRentalId()
-                    , rental.getInventoryId(), rental.getReturnDate()));
+            return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

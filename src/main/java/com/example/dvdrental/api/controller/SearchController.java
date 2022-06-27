@@ -1,14 +1,9 @@
 package com.example.dvdrental.api.controller;
 
-import com.example.dvdrental.entity.Actor;
-import com.example.dvdrental.service.ActorService;
 import com.example.dvdrental.vo.SearchDataVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/search")

@@ -76,44 +76,44 @@ class InventoryRepositoryTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({"4589", "4588", "4587", "4586", "4585"})
-    @Order(3)
-    @DisplayName("삭제 테스트")
-    public void deleteInventory_targetInventory_ListSizeDownAndTargetIdNotFound(int targetInventoryId) {
-
-        List<Inventory> listBeforeDeletion;
-        int sizeBeforeDeletion;
-        int expectedSize;
-
-        Inventory targetInventory;
-
-        List<Inventory> listAfterDeletion;
-        int sizeAfterDeletion;
-        Inventory targetInventoryAfterDeletion;
-        Inventory dummyInventory = new Inventory(-404, -404, null);
-
-        // Before Deletion
-        listBeforeDeletion = inventoryRepository.findAll();
-        sizeBeforeDeletion = listBeforeDeletion.size();
-        expectedSize = sizeBeforeDeletion - 1;
-
-        // Do Delete
-        targetInventory = inventoryRepository.findById(targetInventoryId)
-                .orElseThrow(()-> new IdNotFoundException(targetInventoryId));
-        inventoryRepository.delete(targetInventory);
-
-        // After Deletion
-        listAfterDeletion = inventoryRepository.findAll();
-        sizeAfterDeletion = listAfterDeletion.size();
-        targetInventoryAfterDeletion = inventoryRepository.findById(targetInventoryId)
-                .orElse(dummyInventory);
-
-        // Assert
-        assertEquals(expectedSize, sizeAfterDeletion);
-        assertEquals(dummyInventory.getInventoryId(), targetInventoryAfterDeletion.getInventoryId());
-
-    }
+//    @ParameterizedTest
+//    @CsvSource({"4589", "4588", "4587", "4586", "4585"})
+//    @Order(3)
+//    @DisplayName("삭제 테스트")
+//    public void deleteInventory_targetInventory_ListSizeDownAndTargetIdNotFound(int targetInventoryId) {
+//
+//        List<Inventory> listBeforeDeletion;
+//        int sizeBeforeDeletion;
+//        int expectedSize;
+//
+//        Inventory targetInventory;
+//
+//        List<Inventory> listAfterDeletion;
+//        int sizeAfterDeletion;
+//        Inventory targetInventoryAfterDeletion;
+//        Inventory dummyInventory = new Inventory(-404, -404, null);
+//
+//        // Before Deletion
+//        listBeforeDeletion = inventoryRepository.findAll();
+//        sizeBeforeDeletion = listBeforeDeletion.size();
+//        expectedSize = sizeBeforeDeletion - 1;
+//
+//        // Do Delete
+//        targetInventory = inventoryRepository.findById(targetInventoryId)
+//                .orElseThrow(()-> new IdNotFoundException(targetInventoryId));
+//        inventoryRepository.delete(targetInventory);
+//
+//        // After Deletion
+//        listAfterDeletion = inventoryRepository.findAll();
+//        sizeAfterDeletion = listAfterDeletion.size();
+//        targetInventoryAfterDeletion = inventoryRepository.findById(targetInventoryId)
+//                .orElse(dummyInventory);
+//
+//        // Assert
+//        assertEquals(expectedSize, sizeAfterDeletion);
+//        assertEquals(dummyInventory.getInventoryId(), targetInventoryAfterDeletion.getInventoryId());
+//
+//    }
 
     @ParameterizedTest
     @CsvSource({"11,2","10,2"})
@@ -128,17 +128,17 @@ class InventoryRepositoryTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({"4581"})
-    @Order(5)
-    @DisplayName("전체 조회 테스트 - 리스트 갯수 검사")
-    public void getInventories_verifyListSize(int expectedListSize) {
-
-        List<Inventory> targetList = inventoryRepository.findAll();
-
-        assertEquals(expectedListSize, targetList.size());
-
-    }
+//    @ParameterizedTest
+//    @CsvSource({"4581"})
+//    @Order(5)
+//    @DisplayName("전체 조회 테스트 - 리스트 갯수 검사")
+//    public void getInventories_verifyListSize(int expectedListSize) {
+//
+//        List<Inventory> targetList = inventoryRepository.findAll();
+//
+//        assertEquals(expectedListSize, targetList.size());
+//
+//    }
 
 
 }

@@ -78,43 +78,43 @@ class RentalRepositoryTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({"16058", "16059"})
-    @Order(3)
-    @DisplayName("삭제 테스트")
-    public void deleteRental_targetRental_ListSizeDownAndTargetIdNotFound(int targetRentalId) {
-
-        List<Rental> listBeforeDeletion;
-        int sizeBeforeDeletion;
-        int expectedSize;
-
-        Rental target;
-
-        List<Rental> listAfterDeletion;
-        int sizeAfterDeletion;
-        Rental targetRentalAfterDeletion;
-
-        // Before Deletion
-        listBeforeDeletion = rentalRepository.findAll();
-        sizeBeforeDeletion = listBeforeDeletion.size();
-        expectedSize = sizeBeforeDeletion - 1;
-
-        // Do Delete
-        target = rentalRepository.findById(targetRentalId)
-                .orElseThrow(()-> new IdNotFoundException(targetRentalId));
-        rentalRepository.delete(target);
-
-        // After Deletion
-        listAfterDeletion = rentalRepository.findAll();
-        sizeAfterDeletion = listAfterDeletion.size();
-        targetRentalAfterDeletion = rentalRepository.findById(targetRentalId)
-                .orElse(new Rental(-404, -404, new Timestamp(System.currentTimeMillis()), null));
-
-        // Assert
-        assertEquals(expectedSize, sizeAfterDeletion);
-        assertEquals(-404, targetRentalAfterDeletion.getRentalId());
-
-    }
+//    @ParameterizedTest
+//    @CsvSource({"16058", "16059"})
+//    @Order(3)
+//    @DisplayName("삭제 테스트")
+//    public void deleteRental_targetRental_ListSizeDownAndTargetIdNotFound(int targetRentalId) {
+//
+//        List<Rental> listBeforeDeletion;
+//        int sizeBeforeDeletion;
+//        int expectedSize;
+//
+//        Rental target;
+//
+//        List<Rental> listAfterDeletion;
+//        int sizeAfterDeletion;
+//        Rental targetRentalAfterDeletion;
+//
+//        // Before Deletion
+//        listBeforeDeletion = rentalRepository.findAll();
+//        sizeBeforeDeletion = listBeforeDeletion.size();
+//        expectedSize = sizeBeforeDeletion - 1;
+//
+//        // Do Delete
+//        target = rentalRepository.findById(targetRentalId)
+//                .orElseThrow(()-> new IdNotFoundException(targetRentalId));
+//        rentalRepository.delete(target);
+//
+//        // After Deletion
+//        listAfterDeletion = rentalRepository.findAll();
+//        sizeAfterDeletion = listAfterDeletion.size();
+//        targetRentalAfterDeletion = rentalRepository.findById(targetRentalId)
+//                .orElse(new Rental(-404, -404, new Timestamp(System.currentTimeMillis()), null));
+//
+//        // Assert
+//        assertEquals(expectedSize, sizeAfterDeletion);
+//        assertEquals(-404, targetRentalAfterDeletion.getRentalId());
+//
+//    }
 
     @ParameterizedTest
     @CsvSource({"11541,2026","15894,4416"})
@@ -129,15 +129,15 @@ class RentalRepositoryTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({"16044"})
-    @Order(5)
-    @DisplayName("전체 조회 테스트 - 리스트 갯수 검사")
-    public void getRentals_verifyListSize(int expectedListSize) {
-
-        List<Rental> targetList = rentalRepository.findAll();
-
-        assertEquals(expectedListSize, targetList.size());
-
-    }
+//    @ParameterizedTest
+//    @CsvSource({"16044"})
+//    @Order(5)
+//    @DisplayName("전체 조회 테스트 - 리스트 갯수 검사")
+//    public void getRentals_verifyListSize(int expectedListSize) {
+//
+//        List<Rental> targetList = rentalRepository.findAll();
+//
+//        assertEquals(expectedListSize, targetList.size());
+//
+//    }
 }
