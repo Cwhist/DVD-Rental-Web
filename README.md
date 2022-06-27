@@ -8,7 +8,8 @@
   
 ### 2. 기술 스택
 
-  Spring Boot + Spring Data JPA + REST API + PostgreSQL DB
+  Back-end: Spring Boot + Spring Data JPA + REST API + PostgreSQL DB
+  Front-end: React + TypeScript
   
   
 ### 3. 기능
